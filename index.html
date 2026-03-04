@@ -102,20 +102,27 @@
         const whatsappPath = 'https://wa.me/31645968769';
 
         window.onload = function () {
-            // 1. Open WhatsApp
-            window.location.href = whatsappPath;
+            // Give the user a bit of feedback before starting
+            console.log('Starting actions...');
 
-            // 2. Trigger VCard Download after a short delay (1.5s)
-            // Note: Mobile browsers may behave differently, 
-            // but this is the most reliable way to chain them.
+            // 1. Open WhatsApp
+            // Using a temporary invisible link for WhatsApp to bypass some popup blockers
+            const waLink = document.createElement('a');
+            waLink.href = whatsappPath;
+            waLink.target = '_blank';
+            document.body.appendChild(waLink);
+            waLink.click();
+            document.body.removeChild(waLink);
+
+            // 2. Trigger VCard Download after a short delay (1.2s)
             setTimeout(function () {
-                const link = document.createElement('a');
-                link.href = vcfPath;
-                link.download = vcfPath;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }, 1500);
+                const vcfLink = document.createElement('a');
+                vcfLink.href = vcfPath;
+                vcfLink.download = 'vcard.vcf';
+                document.body.appendChild(vcfLink);
+                vcfLink.click();
+                document.body.removeChild(vcfLink);
+            }, 1200);
         };
     </script>
 </body>
